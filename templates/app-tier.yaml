@@ -1,0 +1,116 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS VPC Three-Tier Architecture - Application Tier
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC ID
+  VpcCidr:
+    Type: String
+    Description: VPC CIDR
+    Default: 10.0.0.0/16
+  PublicSubnet1Id:
+    Type: AWS::EC2::Subnet::Id
+    Description: Public Subnet 1 ID
+  PublicSubnet2Id:
+    Type: AWS::EC2::Subnet::Id
+    Description: Public Subnet 2 ID
+  PrivateSubnet1Id:
+    Type: AWS::EC2::Subnet::Id
+    Description: Private Subnet 1 ID
+  PrivateSubnet2Id:
+    Type: AWS::EC2::Subnet::Id
+    Description: Private Subnet 2 ID
+  PrivateSubnet3Id:
+    Type: AWS::EC2::Subnet::Id
+    Description: Private Subnet 3 ID
+  PrivateSubnet4Id:
+    Type: AWS::EC2::Subnet::Id
+    Description: Private Subnet 4 ID
+  AvailabilityZones:
+    Type: List<AWS::EC2::AvailabilityZone::Name>
+    Description: List of Availability Zones
+  AppServerInstanceType:
+    Type: String
+    Description: App Server EC2 instance type
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium                       
+    ConstraintDescription: Must be a valid EC2 instance type
+  AppServerMinSize:
+    Type: Number
+    Description: Minimum number of EC2 instances
+    Default: 2
+  AppServerMaxSize:
+    Type: Number
+    Description: Maximum number of EC2 instances
+    Default: 4
+  AppServerDesiredCapacity:
+    Type: Number
+    Description: Desired number of EC2 instances
+    Default: 2
+  AppServerRootVolumeSize:
+    Type: Number
+    Description: App Server root EBS volume size
+    Default: 8
+  AppServerDataVolumeSize:
+    Type: Number
+    Description: App Server data EBS volume size
+    Default: 50
+  AppServerDataVolumeType:
+    Type: String
+    Description: App Server data EBS volume type
+    Default: gp2
+    AllowedValues:
+      - gp2
+      - io1
+      - sc1
+      - st1
+      - standard
+  AppServerDataVolumeIOPS:
+    Type: Number
+    Description: App Server data EBS volume IOPS
+    Default: 100
+  AppServerDataVolumeEncrypted:
+    Type: String
+    Description: App Server data EBS volume encrypted
+    Default: false
+    AllowedValues:
+      - true
+      - false
+  AppServerDataVolumeKmsKeyId:
+    Type: String
+    Description: App Server data EBS volume KMS key ID
+    Default: ""
+  AppServerDataVolumeSnapshotId:
+    Type: String
+    Description: App Server data EBS volume snapshot ID
+    Default: ""
+  AppServerDataVolumeDeviceName:
+    Type: String
+    Description: App Server data EBS volume device name
+    Default: /dev/xvdf
+  AppServerDataVolumeMountPath:
+    Type: String
+    Description: App Server data EBS volume mount path
+    Default: /var/www/html
+  KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Amazon EC2 Key Pair
+  BastionSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Bastion Security Group ID
+  BastionInstanceType:
+    Type: String
+    Description: Bastion EC2 instance type
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium                       
+    ConstraintDescription: Must be a valid EC2 instance type
+
